@@ -1,0 +1,85 @@
+@import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro&display=swap');
+
+*, *:before, *:after{
+    box-sizing: border-box; /* width of elements includes padding */
+    font-family: 'Source Sans Pro', sans-serif;
+}
+
+form, ul, h1{
+    width: 90%;
+    padding: 10px;
+    margin: auto;
+    text-align: center;
+}
+
+h1{
+    margin-top: 40px;
+}
+
+label{
+    margin: auto;
+}
+
+input{
+    padding: 10px;
+    width: 80%;
+    border: 0;
+    border-bottom: 2px solid rgb(184, 184, 184);
+    font-size: 24px;
+}
+
+input:focus{
+    outline: none !important;
+    background-color: rgb(219, 219, 219);
+}
+
+input:hover{
+    background-color: rgb(219, 219, 219);
+}
+
+
+ul{
+    list-style-type: none;
+
+}
+
+.item{
+    margin: 10px auto;
+    padding: 5px;
+    width: 80%;
+    font-size: 24px;
+}
+
+.item:hover{
+    background-color: aliceblue;
+}
+
+.item *{
+    display: inline-block;
+}
+
+.item .itemText{
+    width: 80%;
+    text-align: left;
+}
+
+.item .options{
+    text-align: right;
+    width: 20%;
+}
+
+.item button{
+    width: 30px;
+    height: 30px;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+.item .edit{
+    margin-right: 15px;
+}
+
+.item .delete{
+    
+}
+
