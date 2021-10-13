@@ -1,17 +1,14 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
 
-import {BrowserRouter as Router, Switch, Route, Link} from 'react-router-dom';
-
-import firebaseApp from './firebase';
 import ItemList from './ItemList';
 import Form from './Form';
 
-const dbLink = 'https://to-do-list-7afb6-default-rtdb.firebaseio.com/items.json';
+import {getDatabase, ref, child, get, set} from 'firebase/database';
+
+
 const quoteAPI = 'http://quotes.rest/qod.json?category=inspire';
 
-class App extends React.Component{
+class ToDo extends React.Component{
     constructor(props){
         super(props);
 
@@ -23,33 +20,33 @@ class App extends React.Component{
     }
 
     componentDidMount(){
+        const dbRef = ref(getDatabase());
+        
+        get(child(dbRef, `users/${this.props.uid}`)).then((snapshot) =>{
+            if(snapshot.exists()){
+                console.log(snapshot.val());
 
-        fetch(dbLink)
-            .then(response => response.json())
-            .then(data => {
-                
                 const items = [];
                 
-                if(data){
-                    for(const [key, value] of Object.entries(data)){
+                for(const [key, value] of Object.entries(snapshot.val())){
+                    if(key !== 'id')
                         items.push(value);
-                    }
                 }
 
                 this.setState({
                     items: items
-                });
+                });                
+            }
+        });
 
+        fetch(quoteAPI)
+            .then(res => res.json())
+            .then(result => {
+                console.log(result);
+                const quote = result.contents.quotes[0].quote;
+                console.log(quote);
+                this.setState({quote: quote, quoteIsLoading: false});
             });
-
-        // fetch(quoteAPI)
-        //     .then(res => res.json())
-        //     .then(result => {
-        //         console.log(result);
-        //         const quote = result.contents.quotes[0].quote;
-        //         console.log(quote);
-        //         this.setState({quote: quote, quoteIsLoading: false});
-        //     });
     }
 
     handleInputChange(event){
@@ -63,7 +60,7 @@ class App extends React.Component{
         const items = this.state.items.slice();
         items.push(this.state.input);
         
-        putItemList(items);
+        putItemList(items, this.props.uid);
         
         this.setState({
             items: items,
@@ -78,7 +75,7 @@ class App extends React.Component{
             items.splice(index, 1);
         }
 
-        putItemList(items);
+        putItemList(items, this.props.uid);
 
         this.setState({items: items})
     }
@@ -106,28 +103,23 @@ class App extends React.Component{
                     items={this.state.items} 
                     onDeleteItem={this.handleDeleteItem}    
                 />
+
+                <button onClick={this.props.signOut}>Sign Out</button>
             </div>
         );
     }
 
 }
 
-function putItemList(items){
+function putItemList(items, uid){
+    const db = getDatabase();
     const dbItems = {};
 
     items.forEach((item, index) => {
         dbItems[index] = item;
     });
 
-    const requestOptions = {
-        method: 'PUT',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify(dbItems)
-    }
-
-    fetch(dbLink, requestOptions)
-        .then(res => res.json())
-        .then(data => console.log('PUT', data));
+    set(ref(db, 'users/' + uid), dbItems);
 }
 
-ReactDOM.render(<App />, document.getElementById('root'));
+export default ToDo;
