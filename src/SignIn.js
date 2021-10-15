@@ -5,13 +5,16 @@ function SignIn(props){
 
     
         return(
-            <form onSubmit={(event) => {
+            <form 
+                className='account'
+                onSubmit={(event) => {
                 event.preventDefault();
                 props.onSubmit();
+                
             }}>
-                <div>Sign In</div>
+                <h2>Sign In</h2>
                 <label>
-                    <div>Email</div>
+                    <h4>Email</h4>
                     <input 
                         type='text'
                         value={props.email}
@@ -20,15 +23,16 @@ function SignIn(props){
                 </label>
 
                 <label>
-                    <div>Password</div>
+                    <h4>Password</h4>
                     <input 
-                        type='text'
+                        type='password'
                         value={props.password}
                         onChange={(e) => props.onChange(e, false)}
                     />
                 </label>
                 
-                <input type='submit' value='Submit' />
+                <input id='submit' type='submit' value='Sign In' />
+                <button type='button' onClick={props.onSwitch}>Create Account</button>
             </form>
         );
     

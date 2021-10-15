@@ -5,13 +5,15 @@ function CreateAccount(props){
     
         return(
             
-            <form onSubmit={(event) => {
+            <form 
+                className='account'
+                onSubmit={(event) => {
                 event.preventDefault();
                 props.onSubmit();
             }}>
-                <div>Create Account</div>
+                <h2>Create Account</h2>
                 <label>
-                    <div>Email</div>
+                    <h4>Email</h4>
                     <input 
                         type='text'
                         value={props.email}
@@ -20,7 +22,7 @@ function CreateAccount(props){
                 </label>
 
                 <label>
-                    <div>Password</div>
+                    <h4>Password</h4>
                     <input 
                         type='text'
                         value={props.password}
@@ -28,7 +30,8 @@ function CreateAccount(props){
                     />
                 </label>
                 
-                <input type='submit' value='Submit' />
+                <input id='submit' type='submit' value='Create Account' />
+                <button type='button' onClick={props.onSwitch}>Sign In</button>
             </form>
         );
     

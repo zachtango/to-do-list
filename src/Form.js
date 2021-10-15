@@ -3,7 +3,8 @@
 function Form(props){
 
     return(
-        <form onSubmit={(event) => {
+        <form 
+            onSubmit={(event) => {
             event.preventDefault();
             props.onSubmit();
         }}>

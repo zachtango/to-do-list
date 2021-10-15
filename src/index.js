@@ -28,7 +28,7 @@ class App extends React.Component{
         this.onSubmitSignIn = this.onSubmitSignIn.bind(this);
         this.onSubmitCreateAccount = this.onSubmitCreateAccount.bind(this);
         this.onInputChange = this.onInputChange.bind(this);
-        this.onPress = this.onPress.bind(this);
+        this.onSwitch = this.onSwitch.bind(this);
         this.onSignOut = this.onSignOut.bind(this);
     }
     
@@ -82,7 +82,7 @@ class App extends React.Component{
         }
     }
 
-    onPress(){
+    onSwitch(){
 
         this.setState({
             signInPage: !this.state.signInPage
@@ -101,10 +101,9 @@ class App extends React.Component{
     }
 
     render(){
-        const button = <button onClick={this.onPress}>switch</button>;
 
         return(
-            <div>
+            <div id='app'>
                 {this.state.isSignedIn ? 
                     <ToDo
                         email={this.state.email}
@@ -116,14 +115,15 @@ class App extends React.Component{
                             <SignIn
                                 onSubmit={this.onSubmitSignIn}
                                 onChange={this.onInputChange}
+                                onSwitch={this.onSwitch}
                             /> :
                             <CreateAccount
                                 onSubmit={this.onSubmitCreateAccount}
                                 onChange={this.onInputChange}
-
+                                onSwitch={this.onSwitch}
                             />
                         }
-                        {button}
+                        
                     </div>
                     
                     
