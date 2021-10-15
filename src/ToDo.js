@@ -8,11 +8,13 @@ import {getDatabase, ref, child, get, set} from 'firebase/database';
 
 const quoteAPI = 'http://quotes.rest/qod.json?category=inspire';
 
+const quote = 'There are no limits. There are plateaus, but you must not stay there, you must go beyond them. If it kills you, it kills you. A man must constantly exceed his level.';
+
 class ToDo extends React.Component{
     constructor(props){
         super(props);
 
-        this.state = {items: [], input: '', quote: '', quoteIsLoading: true};
+        this.state = {items: [], input: '', quote: quote, quoteIsLoading: false};
 
         this.handleInputChange = this.handleInputChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -39,14 +41,14 @@ class ToDo extends React.Component{
             }
         });
 
-        fetch(quoteAPI)
-            .then(res => res.json())
-            .then(result => {
-                console.log(result);
-                const quote = result.contents.quotes[0].quote;
-                console.log(quote);
-                this.setState({quote: quote, quoteIsLoading: false});
-            });
+        // fetch(quoteAPI)
+        //     .then(res => res.json())
+        //     .then(result => {
+        //         console.log(result);
+        //         const quote = result.contents.quotes[0].quote;
+        //         console.log(quote);
+        //         this.setState({quote: quote, quoteIsLoading: false});
+        //     });
     }
 
     handleInputChange(event){
